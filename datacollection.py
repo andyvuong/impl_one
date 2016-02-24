@@ -29,6 +29,21 @@ for submission in submissions:
 #			uniqueusers.append(i)
 
 
+
+
+
+
+
+# CREATES THE JSON DATA
+json_data = json.dumps(d)
+
+
+
+
+
+
+
+# Writes to file
 for u in sorted(d, key=d.get, reverse=True):
 	f.write(u)
 	f.write(' ')
