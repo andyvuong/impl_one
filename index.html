@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styles.css">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link href='https://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?f amily=Dancing+Script' rel='stylesheet' type='text/css'>
         <link href='./css/bootstrap.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
@@ -14,26 +14,39 @@
             <div id="top-bar" class="row">
                 <span class="subreddit-chooser">
                     <p>r/</p>
-                    <input type="search" autofocus="autofocus" placeholder="search for a subreddit here"/>
+                    <input id="search-reddit" type="search" autofocus="autofocus" placeholder="search for a subreddit"/>
                 </span>
             </div>
             <div id="content-area" class="row">
                 <div class="ui">
                     <div class="zoom-bar">
                         <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-search-plus fa-2x"></i></li>
-                            <li class="list-group-item"><i class="fa fa-search-minus fa-2x"></i></li>
-                            <li class="list-group-item"><i class="fa fa-arrows-alt fa-2x"></i></li>
+                            <li class="list-group-item"><a href="#"><i class="fa fa-search-plus fa-2x"></i></a></li>
+                            <li class="list-group-item"><a href="#"><i class="fa fa-search-minus fa-2x"></i></a></li>
+                            <li class="list-group-item"><a href="#"><i class="fa fa-arrows-alt fa-2x"></i></a></li>
                         </ul>
                     </div>   
-                    <div class="search-bar">
-                        <i class="fa fa-search fa-2x"></i>
+                    <div class="input-group search-bar">
+                        <span class="input-group-addon" id="basic-addon1">  <a href="#"><i class="fa fa-search fa-2x"></i></a></span>                
                         <input type="text" class="search" placeholder="Search">
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal" tabindex="-10" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>Welcome to Redditmendations, a visualization tool to connect reddit users and recommend new subreddits to explore.</p>
+                        <p>Start by entering a subreddit name in the top left corner.</p>
+                        <p>Individual users can be searched in the search box in the bottom right.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="./js/app.js"></script>
     </body>
 </html>

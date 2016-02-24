@@ -34,9 +34,26 @@ input[type="search"]:-ms-input-placeholder {
     text-decoration: underline;
  }
 
+#top-bar {
+    color: #786078;
+}
+
 .search-bar input {
     border: 1px solid #999;
     font-size: 2.0em;
+    color: #786078;
+}
+
+.search-bar {
+    position: absolute !important;
+    right: 0;
+    bottom: 3%;
+}
+
+.zoom-bar {
+    position: absolute;
+    right: 0;
+    bottom: 50px;
 }
 
 .list-group {
@@ -45,18 +62,57 @@ input[type="search"]:-ms-input-placeholder {
 }
 
 .list-group-item {
-    border: 0px dotted #999;
+    text-align: center;
     padding: 1px;
+    border: 1px solid #999;
+    background-color: #789090 !important; 
 }
 
 #content-area {
     height: 90%;
 }
 
-.ui {
-    position: absolute;
-    display: inline;
-    right: 0;
-    bottom: 3%;
+#content-area input {
+    border: 1px solid #a8c0a8;
 }
 
+.ui {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    bottom: 3%;
+    margin: 0 1% 0 1%;
+}
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-body {
+    font-size: 2em;
+    text-align: center;
+    line-height: 115%;
+}
+
+.modal-body p {
+    margin: 25px 0 25px 0;
+}
+
+a {
+    color: #a8c0a8;
+}
