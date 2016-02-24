@@ -12,6 +12,8 @@ and interactions in online reddit communities.
 
 ### Installation & Running the Project
 - Install python
+- Open a terminal
 - cd into the directory the server.py file is
 - Run "python server.py"
 - Visit http://localhost:9000 from your browser
+- Ctl + c from the terminal to exit
