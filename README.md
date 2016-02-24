@@ -11,7 +11,7 @@ and interactions in online reddit communities.
 - Andy Vuong
 
 ### Installation & Running the Project
-- Install python
+- Install python (2.7)
 - Open a terminal
 - cd into the directory the server.py file is
 - Run "python server.py"
