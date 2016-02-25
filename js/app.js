@@ -28,7 +28,7 @@ $(document).ready(function() {
         
     });
 
-    d3.json("../test.json", function(error, graph) {
+    d3.json("../testdata3.json", function(error, graph) {
         w = $("#content-area").width(),
         h = $("#content-area").height();
 
