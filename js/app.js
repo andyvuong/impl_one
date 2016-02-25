@@ -27,6 +27,12 @@ $(document).ready(function() {
         w = $("#content-area").width(),
         h = $("#content-area").height();
 
+        var users = [];
+        for (var n = 0; n < graph.nodes.length; n++) {
+            users.push(graph.nodes[n].name);
+        }
+        console.log(users);
+
         // show tip
         var tip = d3.tip()
             .attr('class', 'd3-tip')
@@ -103,6 +109,7 @@ $(document).ready(function() {
                 .data(graph.nodes)
                 .enter().append("circle")
                 .attr("class", "node")
+                .attr("id", function(d) { return d.name })
                 .attr("r", 10)
                 .call(force.drag)
                 .on("mouseover", function(d) {
@@ -180,6 +187,20 @@ $(document).ready(function() {
         function zoomClicked(translate, scale) {
             svg.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
         }
+
+        $('#search-user').on('click', function () {
+            var input = $("#search-user-box").val();
+            if (users.indexOf(input) != -1) {
+                $("#"+input).d3Click();
+            }
+        });
+
+        jQuery.fn.d3Click = function () {
+          this.each(function (i, e) {
+            var evt = new MouseEvent("click");
+            e.dispatchEvent(evt);
+          });
+        };
 
 /*
             var height = $("#content-area").width();
