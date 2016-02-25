@@ -84,10 +84,10 @@ function gen_vis(input) {
         
         var force = d3.layout.force()
             .size([w, h])
-            .charge(-100)
+            .charge(-200)
             .nodes(graph.nodes)
             .links(graph.links)
-            .linkDistance(100)
+            .linkDistance(150)
             .start();
 
         var linkSelected;
@@ -150,7 +150,7 @@ function gen_vis(input) {
                     }
                     else if (selected != this) {
                         d3.select(selected).attr('r', 10)
-                        .style("fill","#703d6f");
+                        .style("fill","#CA1919");
                          selected = this;
                          d3.select(selected).attr('r', 15)
                         .style("fill","#7B6ED6");
@@ -164,7 +164,7 @@ function gen_vis(input) {
                     console.log(list);
                     $("#key-cur").append(d.name);
                     for (var k = 0; k < list.length; k++) {
-                        if (k > 12) {
+                        if (k > 9) {
                             break;
                         }
                         $("#key-use ul").append("<li>"+list[k]+"</li>"); //text(d.url);

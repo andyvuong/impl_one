@@ -15,11 +15,13 @@ AskScienceFiction
 quityourbullshit
 dbz
 futurama
+80s_sandwich
 Warthunder
 wheredidthesodago
 sanfrancisco
 NoStupidQuestions
 BabyBumps
+eatsandwiches
 brasil
 paradoxplaza
 GifRecipes
@@ -94,6 +96,7 @@ CODZombies
 im14andthisisdeep
 summonerswar
 AskReddit
+askreddit
 funny
 politics
 The_Donald

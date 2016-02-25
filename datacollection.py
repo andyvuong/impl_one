@@ -9,8 +9,8 @@ print ("Starting script.")
 test_limit = 2
 test_karma = 50
 chosen_subreddit = sys.argv[1]
-maxusers = 30
-matching_threshold = 3
+maxusers = 15
+matching_threshold = 7
 num_recommendedsubs = 5
 
 

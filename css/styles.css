@@ -16,7 +16,7 @@ html, body, .container {
 
 .node {
   cursor: pointer;
-  fill: #703d6f;
+  fill: #CA1919;
   stroke: #777;
   stroke-width: 1.5px;
 }
@@ -57,13 +57,13 @@ input[type="search"]:-ms-input-placeholder {
  }
 
 #top-bar {
-    color: #706482;
+    color: #DE6B48;
 }
 
 .search-bar input {
     border: 1px solid #999;
     font-size: 2.0em;
-    color: #706482;
+    color: #DE6B48;
 }
 
 .search-bar {
@@ -138,7 +138,7 @@ input[type="search"]:-ms-input-placeholder {
 }
 
 a {
-    color: #abbb9f;
+    color: #DE6B48;
 }
 
 .ui2 {
@@ -153,7 +153,7 @@ a {
 .ui-helper-hidden-accessible { display:none; }
 
 .ui-menu .ui-menu-item a{
-    color: #706482;
+    color: #DE6B48;
 }
 
 ul.ui-autocomplete {
@@ -171,7 +171,7 @@ ul.ui-autocomplete {
     right: 2%;
     height: 80%;
     width: 26%;
-    background-color: #f0f0a8;
+    background-color: #C1CFDA;
     box-shadow: 0 0 10px rgba(0,0,0,0.6);
     -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
@@ -179,7 +179,7 @@ ul.ui-autocomplete {
 }
 
 .key h3 {
-  color: #706482;
+  color: #DE6B48;
   text-align: center;
   margin-left: 10px;
   margin-right: 10px;
@@ -189,9 +189,9 @@ ul.ui-autocomplete {
   padding: 0;
   margin-top: 5px;
   margin-bottom: 5px;
-  color: #706482;
+  color: #DE6B48;
   width: 80%;
-  border-top: 1px solid #706482;
+  border-top: 1px solid #DE6B48;
   margin-left: auto;
   margin-right: auto;
 }
@@ -202,7 +202,7 @@ ul.ui-autocomplete {
 
 #key-rec ul {
   font-size: 1.3em;
-  color: #706482;
+  color: #CA1919;
 }
 
 #key-use {
@@ -211,12 +211,12 @@ ul.ui-autocomplete {
 
 #key-use ul {
   font-size: 1.3em;
-  color: #706482;
+  color: #CA1919;
 }
 
 #key-cur {
   font-size: 1.3em;
-  color: #706482;
+  color: #CA1919;
   height: 5%;
   text-align: center;
 }
@@ -229,14 +229,14 @@ ul.ui-autocomplete {
 .d3-tip {
   line-height: 1;
   padding: 12px;
-  background: #f0f0a8;
-  color: #706482;
+  background: #C1CFDA;
+  color: #CA1919;
   border-radius: 2px;
 }
 
 .node-tip {
   background: transparent;
-  color: #C84648;
+  color: #7B6ED6;
   font-size: 2em;
 }
 
