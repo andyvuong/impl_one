@@ -18,6 +18,10 @@ and interactions in online reddit communities.
 - Visit http://localhost:9000 from your browser
 - Ctl + c from the terminal to exit
 
+### Note
+- Currently the data collection script is not connected to our search reddit feature. It has to be run manually. (See below). A few subreddits have been pre-crawled and have data sitting on the server. Those can be searched for on the subreddit search box and they include:
+- "python"
+- See the bottom section on getting more data and how it should be saved. No changes to the code need to be made.
+
 ### Getting more data
-- The datacollection.py script runs as 'python datacollection.py <subreddit-name>' and will get data from that subreddit. It can be run separately from the main visualization. To load the script, you can hard code the name of
-the file and its path directly in app.js (excuse the spaghetti code, we know it's bad) where gen_vis() is. For the purposes of presentation, we have a few computed json script included that sit on the server. Just change the file name and it should work!
+- The datacollection.py script runs as 'python datacollection.py <subreddit-name>' and will get data from that subreddit. It can be run separately from the main visualization. The name of the json file should be <subredditname>.json and be saved in the same directory as server.py. The input to the search box on the visualization would just be <subredditname> since .json will be appended to it programmatically. For the purposes of presentation, we have a few computed json script included that sit on the server. Try "python"

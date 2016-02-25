@@ -16,7 +16,10 @@ $(document).ready(function() {
             subreddit = $("#search-reddit").val();
             console.log($("#search-reddit").val());
             if (subreddit === "python") {
-                gen_vis("testdata3.json");
+                gen_vis("testdata3");
+            }
+            else {
+                gen_vis(subreddit);
             }
         }
     });
@@ -35,7 +38,7 @@ $(document).ready(function() {
 
     //d3.json("../testdata3.json", function(error, graph) {
 function gen_vis(input) {
-    d3.json("../" + input, function(error, graph) {
+    d3.json("../" + input + ".json", function(error, graph) {
         d3.select("#content-area").selectAll("svg").selectAll("*").remove();
         d3.select("#content-area").selectAll("svg").remove();
 
