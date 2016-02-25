@@ -1,3 +1,4 @@
+import sys
 import praw
 import json
 from collections import defaultdict
@@ -7,11 +8,15 @@ print ("Starting script.")
 # Specify Parameters
 test_limit = 2
 test_karma = 50
-chosen_subreddit = 'Python'
+chosen_subreddit = sys.argv[1]
 maxusers = 30
 matching_threshold = 3
 num_recommendedsubs = 5
-'''
+
+
+print chosen_subreddit
+
+
 r = praw.Reddit(user_agent='Test Script CS 467')
 subreddit = r.get_subreddit(chosen_subreddit)
 submissions = subreddit.get_top_from_all(limit=test_limit)
@@ -164,7 +169,7 @@ winsound.Beep(400,5000)
 
 
 
-'''
+
 
 
 
