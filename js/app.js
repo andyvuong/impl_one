@@ -6,19 +6,44 @@ $(document).ready(function() {
         $('#search-reddit').focus();
     });
 
+    $('#zoom-in').on('click', function () {
 
+    });
+
+    $('#zoom-out').on('click', function () {
+     
+    });
+
+    $('#expand').on('click', function () {
+        
+    });
+
+    $('#search-user').on('click', function () {
+        
+    });
 
     var height = 350;
     var width = 350;
     var force = d3.layout.force();
-    var svg = d3.select("#content-area").append("svg")
+    var svg = d3.select("#content-area").append("svg:svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .call(d3.behavior.zoom().on("zoom", redraw));
+
+    var vis = svg
+        .append('g');
+
+    function redraw() {
+        
+        vis.attr("transform",
+                 "translate(" + d3.event.translate + ")"
+                 + " scale(" + d3.event.scale + ")");
+    }
 
     d3.json("../test.json", function(error, json) {
         svg.selectAll("*").remove();
         data = json;
-        r = 5;
+        r = 10;
         
         var links = data.links;
         var nodes = data.nodes;
@@ -34,7 +59,10 @@ $(document).ready(function() {
             .data(links)
             .enter().append("line")
             .attr("class", "link")
-            .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+            .style("stroke-width", function(d) { 
+                console.log(d.list.length)
+                return Math.sqrt(d.list.length); 
+            });
 
         var node = svg.selectAll(".node")
             .data(nodes)
@@ -42,6 +70,11 @@ $(document).ready(function() {
             .attr("class", "node")
             .attr("r", r)
             .call(force.drag);
+
+          vis.style("opacity", 1e-6)
+            .transition()
+            .duration(1000)
+            .style("opacity", 1);
 
         force.on("tick", function() {
 
@@ -54,4 +87,5 @@ $(document).ready(function() {
                 .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
           });
     });
+
 });
