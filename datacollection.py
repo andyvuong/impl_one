@@ -2,45 +2,40 @@ import praw
 import json
 from collections import defaultdict
 
+
+print ("Starting script.")
+
+# Specify Parameters
 test_limit = 1
 test_karma = 100
 chosen_subreddit = 'Python'
-maxusers = 5
-
-
+maxusers = 10
 
 r = praw.Reddit(user_agent='Test Script CS 467')
-
 subreddit = r.get_subreddit(chosen_subreddit)
 submissions = subreddit.get_top_from_all(limit=test_limit)
 
-uniqueusers = []
-user_karma_dict = {}
-f = open('users.txt', 'w')
-a = 0
+listofusers = []
 for submission in submissions:
 	submission.replace_more_comments(limit=64, threshold=10)
 	flat_comments = praw.helpers.flatten_tree(submission.comments)
 
 	for comment in flat_comments:
-		a = a+1
-		print(a)
 		if comment.author == None:
 			continue
 		user = comment.author.name
-		if user not in uniqueusers:
-			uniqueusers.append(user)
-#			user_karma_dict[user] = 0
-#		user_karma_dict[user] += comment.score
+		if user not in listofusers:
+			listofusers.append(user)
 
+print ("Finished loading users from comments.")
 
+# Limit the number of users
 testusers = []
 for i in range (0, maxusers):
-	if i < len(uniqueusers):
-		testusers.append(uniqueusers[i])
+	if i < len(listofusers):
+		testusers.append(listofusers[i])
 
-user_subkarma_dict = {}
-
+user_subreddit_karma_dict = {}
 for u in testusers:
 	subreddit_karma_dict = defaultdict(int)
 
@@ -49,42 +44,20 @@ for u in testusers:
 	for comment in comments:
 		sub = str(comment.subreddit)
 		score = comment.score
-		print sub
-		print score
-		#if sub not in subreddit_karma_dict.keys():
-		#	subreddit_karma_dict[sub] = 0
 		subreddit_karma_dict[sub] += score
-		print subreddit_karma_dict[sub]
+	user_subreddit_karma_dict[u] = subreddit_karma_dict
 
-	user_subkarma_dict[u] = subreddit_karma_dict
+print ("Finished calculating breakdown of user's comment karma in the past month.")
 
-
-for u in testusers:
-	temp_dict = user_subkarma_dict[u]
-	for key in temp_dict.keys():
-		if int(temp_dict[key]) < 100:
-			temp_dict[key] = None
-			temp_dict.pop(key, None)
-			continue
-		print (u)
-		print (str(key))
-		print (str(temp_dict[key]))
-		f.write(u)
-		f.write(' ')
-		f.write(str(key))
-		f.write(' ')
-		f.write(str(temp_dict[key]))
-		f.write("\n")
-
-
+connectedusers = defaultdict(list)
 edgelist = []
 for i in range(0,len(testusers)):
 	for j in range(i+1,len(testusers)):
 		temp_edge = {}
 		userA = testusers[i]
 		userB = testusers[j]
-		dictA = user_subkarma_dict[userA]
-		dictB = user_subkarma_dict[userB]
+		dictA = user_subreddit_karma_dict[userA]
+		dictB = user_subreddit_karma_dict[userB]
 		commonSubs = []
 		for key in dictA.keys():
 			if key in dictB.keys() and str(key) != chosen_subreddit:
@@ -95,100 +68,30 @@ for i in range(0,len(testusers)):
 			temp_edge["list"] = commonSubs
 			edgelist.append(temp_edge)
 
+			connectedusers[userA].append(userB)
+			connectedusers[userB].append(userA)
+
+print ("Finished user comparisons and creating edges.")
 
 nodelist = []
-for u in testusers:
+maxconnections = -1
+for i in range(0,len(testusers)):
+	u = testusers[i]
 	temp_dict = {}
 	temp_dict["name"] = u
+	temp_dict["connectedusers"] = connectedusers[u]
+	if len(connectedusers[u]) > maxconnections:
+		maxconnections = len(connectedusers[u])
 	nodelist.append(temp_dict)
- 
+
+print ("Finished creating nodes.")
+
 json_dict = {}
 json_dict["nodes"] = nodelist
-json_dict["edges"] = edgelist
+json_dict["links"] = edgelist
+json_dict["maxconnections"] = maxconnections
 
 with open('testdata2.json', 'w') as outfile:
     json.dump(json_dict, outfile)
 
-
-
-
-'''
-{
-	"nodes":[
-		{"name":"User 1"},
-		{"name":"User 2"},
-		{"name":"User 3"},
-		{"name":"User 4"},
-		{"name":"User 5"},
-		{"name":"User 6"}
-	],
-	"links":[
-		{"source":0, "target":1,"list":["Sub A", "Sub B", "Sub C"]},
-		{"source":0, "target":3,"list":["Sub A", "Sub B"]},
-		{"source":0, "target":5,"list":["Sub A"]},
-		{"source":2, "target":4,"list":["Sub A", "Sub B", "Sub C", "Sub D"]}
-	]
-}
-'''
-
-'''for u in uniqueusers:
-	subreddit_karma_dict = defaultdict(int)
-
-	redditor = get_redditor(u.name)
-	comments = user.get_comments(time='month', limit=None)
-	for comment in comments:
-		subreddit_karma_dict[comment.subreddit.name] += comment.score
-
-	user_subkarma_dict[u] = subreddit_karma_dict
-
-for u in uniqueusers:
-	temp_dict = user_subkarma_dict[u]
-	for key in temp_dict.keys():
-		f.write(u.name)
-		f.write(' ')
-		f.write(key)
-		f.write(' ')
-		f.write(str(temp_dict[u]))
-		f.write("\n")
-	f.write("\n")
-'''
-
-
-
-
-
-
-# CREATES THE JSON DATA
-#json_data = json.dumps(user_karma_dict)
-
-
-
-
-
-
-
-# Writes to file
-'''for u in sorted(user_karma_dict, key=user_karma_dict.get, reverse=True):
-	f.write(u)
-	f.write(' ')
-	f.write(str(user_karma_dict[u]))
-	f.write("\n")
-'''
-
-
-
-
-
-
-
-'''
-for u in uniqueusers:
-	f.write(u)
-	f.write(' ')
-	f.write(str(d[u]))
-	f.write("\n")
-
-'''
-
-
-#f.write(comment.body.encode('utf-8'))
+print ("Finished exporting to JSON.")
