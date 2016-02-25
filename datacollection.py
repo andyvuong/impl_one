@@ -2,7 +2,6 @@ import praw
 import json
 from collections import defaultdict
 
-
 print ("Starting script.")
 
 # Specify Parameters
@@ -10,6 +9,7 @@ test_limit = 1
 test_karma = 100
 chosen_subreddit = 'Python'
 maxusers = 10
+matching_threshold = 3
 
 r = praw.Reddit(user_agent='Test Script CS 467')
 subreddit = r.get_subreddit(chosen_subreddit)
@@ -49,6 +49,23 @@ for u in testusers:
 
 print ("Finished calculating breakdown of user's comment karma in the past month.")
 
+f = open('users.txt', 'w')
+for u in testusers:
+	temp_dict = user_subreddit_karma_dict[u]
+	for key in temp_dict.keys():
+		if int(temp_dict[key]) < test_karma:
+			temp_dict[key] = None
+			temp_dict.pop(key, None)
+			continue
+		f.write(u)
+		f.write(' ')
+		f.write(str(key))
+		f.write(' ')
+		f.write(str(temp_dict[key]))
+		f.write("\n")
+
+print("Filtered out subreddits below a certain karma level.")
+
 connectedusers = defaultdict(list)
 edgelist = []
 for i in range(0,len(testusers)):
@@ -62,7 +79,7 @@ for i in range(0,len(testusers)):
 		for key in dictA.keys():
 			if key in dictB.keys() and str(key) != chosen_subreddit:
 				commonSubs.append(str(key))
-		if commonSubs: # If list is not empty, create an edge
+		if len(commonSubs) > matching_threshold: # If list is not empty, create an edge
 			temp_edge["source"] = i
 			temp_edge["target"] = j
 			temp_edge["list"] = commonSubs
@@ -95,3 +112,27 @@ with open('testdata2.json', 'w') as outfile:
     json.dump(json_dict, outfile)
 
 print ("Finished exporting to JSON.")
+
+
+
+
+
+
+
+
+'''
+f = open('users.txt', 'w')
+for u in testusers:
+	temp_dict = user_subreddit_karma_dict[u]
+	for key in temp_dict.keys():
+		if int(temp_dict[key]) < 100:
+			temp_dict[key] = None
+			temp_dict.pop(key, None)
+			continue
+		f.write(u)
+		f.write(' ')
+		f.write(str(key))
+		f.write(' ')
+		f.write(str(temp_dict[key]))
+		f.write("\n")
+'''

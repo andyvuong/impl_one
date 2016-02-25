@@ -40,7 +40,7 @@ $(document).ready(function() {
                  + " scale(" + d3.event.scale + ")");
     }
 
-    d3.json("../test.json", function(error, json) {
+    d3.json("../testdata2.json", function(error, json) {
         svg.selectAll("*").remove();
         data = json;
         r = 10;
@@ -53,6 +53,7 @@ $(document).ready(function() {
             .charge(-100)
             .nodes(nodes)
             .links(links)
+            .linkDistance(function(link){return width/link.list.length;})
             .start();
 
         var link = svg.selectAll(".link")
