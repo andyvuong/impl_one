@@ -3,6 +3,18 @@ html, body, .container {
 
 }
 
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node {
+  cursor: move;
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
 .subreddit-chooser {
     font-family: sans-serif;
 }
@@ -69,6 +81,8 @@ input[type="search"]:-ms-input-placeholder {
 }
 
 #content-area {
+    margin-left: auto;
+    margin-right: auto;
     height: 90%;
 }
 
