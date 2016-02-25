@@ -20,4 +20,4 @@ and interactions in online reddit communities.
 
 ### Getting more data
 - The datacollection.py script runs as 'python datacollection.py <subreddit-name>' and will get data from that subreddit. It can be run separately from the main visualization. To load the script, you can hard code the name of
-the file and its path directly in app.js (excuse the spaghetti code, we know it's bad) where d3.json( .... is.
+the file and its path directly in app.js (excuse the spaghetti code, we know it's bad) where gen_vis() is. For the purposes of presentation, we have a few computed json script included that sit on the server. Just change the file name and it should work!
