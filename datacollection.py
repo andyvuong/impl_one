@@ -48,6 +48,13 @@ for u in testusers:
 		subreddit_karma_dict[sub] += score
 	user_subreddit_karma_dict[u] = subreddit_karma_dict
 
+with open('user_subreddit_karma_dict.json', 'w') as outfile:
+    json.dump(user_subreddit_karma_dict, outfile)
+
+
+
+
+
 print ("Finished calculating breakdown of user's comment karma in the past month.")
 
 f = open('users.txt', 'w')
@@ -68,7 +75,7 @@ for u in testusers:
 print("Filtered out subreddits below a certain karma level.")
 
 connectedusers = defaultdict(list)
-recommendedsubs = defaultdict(list)
+recommendedsubs = {}
 edgelist = []
 length = len(testusers)
 matrix = [[0 for x in range(length)] for x in range(length)] 
@@ -110,7 +117,7 @@ for i in range(0,length):
 					userArecommendedsubs[str(key)] += 1 
 	
 
-	recommendedsubs[userA].append(userArecommendedsubs)
+	recommendedsubs[userA] = userArecommendedsubs
 
 print ("Finished user comparisons and creating edges.")
 
@@ -133,7 +140,7 @@ json_recommendedsubs = defaultdict(list)
 for key in recommendedsubs.keys():
 	highestsubs = []
 	count = num_recommendedsubs
-	for sub in sorted(recommendedsubs, key=recommendedsubs.get):
+	for sub in sorted(recommendedsubs[key], key=recommendedsubs[key].get):
 		if count <= 0:
 			break
 		highestsubs.append(sub)
@@ -143,7 +150,7 @@ for key in recommendedsubs.keys():
 json_dict = {}
 json_dict["nodes"] = nodelist
 json_dict["links"] = edgelist
-json_dict["recommendedsubs"] = recommendedsubs
+json_dict["recommendedsubs"] = json_recommendedsubs
 json_dict["maxconnections"] = maxconnections
 
 with open('testdata2.json', 'w') as outfile:
@@ -152,7 +159,8 @@ with open('testdata2.json', 'w') as outfile:
 print ("Finished exporting to JSON.")
 
 
-
+import winsound
+winsound.Beep(400,5000)
 
 
 
