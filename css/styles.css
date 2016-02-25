@@ -128,7 +128,7 @@ input[type="search"]:-ms-input-placeholder {
 }
 
 .modal-body {
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     line-height: 115%;
 }
