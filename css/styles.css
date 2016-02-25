@@ -3,7 +3,7 @@ html, body, .container {
 }
 
 .link {
-  stroke: #000;
+  stroke: #777;
   stroke-width: 1.5px;
   cursor: pointer;
 }
@@ -17,7 +17,7 @@ html, body, .container {
 .node {
   cursor: pointer;
   fill: #703d6f;
-  stroke: #000;
+  stroke: #777;
   stroke-width: 1.5px;
 }
 
@@ -170,7 +170,7 @@ ul.ui-autocomplete {
     top: 3%;
     right: 2%;
     height: 80%;
-    width: 23%;
+    width: 26%;
     background-color: #f0f0a8;
     box-shadow: 0 0 10px rgba(0,0,0,0.6);
     -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
@@ -197,7 +197,12 @@ ul.ui-autocomplete {
 }
 
 #key-rec {
-  height: 35%;
+  height: 20%;
+}
+
+#key-rec ul {
+  font-size: 1.3em;
+  color: #706482;
 }
 
 #key-use {
@@ -219,4 +224,28 @@ ul.ui-autocomplete {
 .key div {
   margin-left: 10px;
   margin-right: 10px; 
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: #f0f0a8;
+  color: #706482;
+  border-radius: 2px;
+}
+
+.node-tip {
+  background: transparent;
+  color: #C84648;
+  font-size: 2em;
+}
+
+strong {
+  font-size: 1.2em;
+ 
+}
+
+.sim-list {
+  margin-top: 5px;
+  font-size: 1.1em;
 }

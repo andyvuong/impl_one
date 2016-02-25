@@ -13,6 +13,11 @@ $(document).ready(function() {
 
     $.get("../subs.txt", callback);
 
+    $( "#search-reddit" ).autocomplete({
+        maxResults: 5,
+        source: availableWords
+    });
+
     // on modal close, focus on reddit search box
     $('#myModal').on('hidden.bs.modal', function () {
         $('#search-reddit').focus();
@@ -22,13 +27,36 @@ $(document).ready(function() {
         w = $("#content-area").width(),
         h = $("#content-area").height();
 
+        // show tip
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .html(function(d) {
+                var sim = "<ul class=\"sim-list\">"
+                for (var sim_in = 0; sim_in < d.list.length; sim_in++) {
+                    sim += "<li>" + d.list[sim_in] + "</li>";
+                }
+                sim += "</ul>";
+
+                return "<strong>" + d.source.name + "</strong> and <strong>" + d.target.name + "</strong>" + sim;
+                
+            });
+
+        var nodeTip = d3.tip()
+            .attr('class', 'node-tip')
+            .html(function(d) {
+                return d.name;
+            });
+
         var svg = d3.select("#content-area")
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h)
                 .append("g")
                 .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoom))
+                .call(tip)
+                .call(nodeTip)
                 .append("g");
+
         
         var force = d3.layout.force()
             .size([w, h])
@@ -38,30 +66,26 @@ $(document).ready(function() {
             .linkDistance(100)
             .start();
 
-
         var linkSelected;
         var link = svg.selectAll(".link")
                 .data(graph.links)
                 .enter().append("line")
                 .attr("class", "link")
                 .attr("transform", function(d) { return "translate(" + d + ")"; })
+  
                 .on("mouseover", function(d) {
                     console.log("yolo");
                     d3.select(this).attr("class", "link1")
-                   /* if (!linkSelected) {
-                        linkSelected = this;
-                        d3.select(this).attr("class", "link1")
-                    }
-                    else if (linkSelected != this) {
-                        d3.select(linkSelected).attr("class", "link")
-                        linkSelected = this;
-                        d3.select(linkSelected).attr("class", "link1")
-                    }*/
+                    tip.show(d)
                     //console.log(d.list);
                 })
                 .on("mouseout", function(d) {
                     console.log("out");
                     d3.select(this).attr("class", "link");
+                    tip.hide(d)
+                })
+                .on("click", function(d) {
+                    
                 });
 
         var zoom = d3.behavior.zoom();
@@ -81,6 +105,18 @@ $(document).ready(function() {
                 .attr("class", "node")
                 .attr("r", 10)
                 .call(force.drag)
+                .on("mouseover", function(d) {
+                    if (this != selected) {
+                        d3.select(this).attr('r', 12);
+                    }
+                    nodeTip.show(d);
+                })
+                .on("mouseout", function(d) {
+                    if (this != selected) {
+                        d3.select(this).attr('r', 10);
+                    }
+                     nodeTip.hide(d);
+                })
                 .on("click", function(d) {
                     if (!selected) {
                         selected = this;
@@ -95,6 +131,7 @@ $(document).ready(function() {
                         .style("fill","#7B6ED6");
                     }
                     
+                    // similar users
                     $("#key-use ul").empty();
                     $("#key-cur").empty();
                     console.log(d.connectedusers);
@@ -102,7 +139,22 @@ $(document).ready(function() {
                     console.log(list);
                     $("#key-cur").append(d.name);
                     for (var k = 0; k < list.length; k++) {
+                        if (k > 12) {
+                            break;
+                        }
                         $("#key-use ul").append("<li>"+list[k]+"</li>"); //text(d.url);
+                    }
+
+                    // recommended
+                    $("#key-rec ul").empty();
+                    var username = d.name;
+                    //console.log(username);
+                    listRec = graph.recommendedsubs[username];
+                    for (var k = 0; k < listRec.length; k++) {
+                        if (k > 5) {
+                            break;
+                        }
+                        $("#key-rec ul").append("<li>"+listRec[k]+"</li>"); //text(d.url);
                     }
                 });
 
