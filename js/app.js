@@ -18,16 +18,6 @@ $(document).ready(function() {
         $('#search-reddit').focus();
     });
 
-    $('#zoom-out').on('click', function () {
-     
-    });
-
-
-
-    $('#search-user').on('click', function () {
-        
-    });
-
     d3.json("../testdata3.json", function(error, graph) {
         w = $("#content-area").width(),
         h = $("#content-area").height();
@@ -49,15 +39,32 @@ $(document).ready(function() {
             .start();
 
 
+        var linkSelected;
         var link = svg.selectAll(".link")
                 .data(graph.links)
                 .enter().append("line")
                 .attr("class", "link")
-                .attr("transform", function(d) { return "translate(" + d + ")"; });
+                .attr("transform", function(d) { return "translate(" + d + ")"; })
+                .on("mouseover", function(d) {
+                    console.log("yolo");
+                    d3.select(this).attr("class", "link1")
+                   /* if (!linkSelected) {
+                        linkSelected = this;
+                        d3.select(this).attr("class", "link1")
+                    }
+                    else if (linkSelected != this) {
+                        d3.select(linkSelected).attr("class", "link")
+                        linkSelected = this;
+                        d3.select(linkSelected).attr("class", "link1")
+                    }*/
+                    //console.log(d.list);
+                })
+                .on("mouseout", function(d) {
+                    console.log("out");
+                    d3.select(this).attr("class", "link");
+                });
 
         var zoom = d3.behavior.zoom();
-        var curTranslate = 0;
-        var curScale = zoom.scale();
 
         function zoom() {
             curTranslate = d3.event.translate;
@@ -67,29 +74,49 @@ $(document).ready(function() {
             svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
         }
 
+        var selected;
         var node = svg.selectAll(".node")
                 .data(graph.nodes)
                 .enter().append("circle")
                 .attr("class", "node")
                 .attr("r", 10)
-                .call(force.drag);
+                .call(force.drag)
+                .on("click", function(d) {
+                    if (!selected) {
+                        selected = this;
+                        d3.select(this).attr('r', 15)
+                        .style("fill","#7B6ED6")
+                    }
+                    else if (selected != this) {
+                        d3.select(selected).attr('r', 10)
+                        .style("fill","#703d6f");
+                         selected = this;
+                         d3.select(selected).attr('r', 15)
+                        .style("fill","#7B6ED6");
+                    }
+                    
+                    $("#key-use ul").empty();
+                    $("#key-cur").empty();
+                    console.log(d.connectedusers);
+                    list = d.connectedusers
+                    console.log(list);
+                    $("#key-cur").append(d.name);
+                    for (var k = 0; k < list.length; k++) {
+                        $("#key-use ul").append("<li>"+list[k]+"</li>"); //text(d.url);
+                    }
+                });
 
         force.on("tick", function() {
             link.attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
 
             node.attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
         });
 
         $('#zoom-in').on('click', function () {
-            console.log("zoom in");
-            curTranslate[0] = curTranslate[0] - 1;
-            curTranslate[1] = curTranslate[1] - 0.5;
-            curScale = curScale + 0.5;
-            zoomClicked(curTranslate, curScale);
         });
 
         $('#expand').on('click', function () {

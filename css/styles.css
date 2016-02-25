@@ -1,18 +1,28 @@
 html, body, .container {
     height: 97vh;
-
 }
 
 .link {
   stroke: #000;
   stroke-width: 1.5px;
+  cursor: pointer;
+}
+
+.link1 {
+  stroke: #7B6ED6;
+  stroke-width: 3.5px;
+  cursor: pointer;
 }
 
 .node {
-  cursor: move;
+  cursor: pointer;
   fill: #703d6f;
   stroke: #000;
   stroke-width: 1.5px;
+}
+
+.active {
+  fill: #7B6ED6;
 }
 
 .subreddit-chooser {
@@ -159,7 +169,7 @@ ul.ui-autocomplete {
     position: absolute;
     top: 3%;
     right: 2%;
-    height: 60%;
+    height: 80%;
     width: 23%;
     background-color: #f0f0a8;
     box-shadow: 0 0 10px rgba(0,0,0,0.6);
@@ -192,6 +202,18 @@ ul.ui-autocomplete {
 
 #key-use {
   height: 40%;
+}
+
+#key-use ul {
+  font-size: 1.3em;
+  color: #706482;
+}
+
+#key-cur {
+  font-size: 1.3em;
+  color: #706482;
+  height: 5%;
+  text-align: center;
 }
 
 .key div {
