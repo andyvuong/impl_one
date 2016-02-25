@@ -5,11 +5,12 @@ from collections import defaultdict
 print ("Starting script.")
 
 # Specify Parameters
-test_limit = 1
-test_karma = 100
+test_limit = 2
+test_karma = 50
 chosen_subreddit = 'Python'
-maxusers = 10
+maxusers = 30
 matching_threshold = 3
+num_recommendedsubs = 5
 
 r = praw.Reddit(user_agent='Test Script CS 467')
 subreddit = r.get_subreddit(chosen_subreddit)
@@ -67,18 +68,25 @@ for u in testusers:
 print("Filtered out subreddits below a certain karma level.")
 
 connectedusers = defaultdict(list)
+recommendedsubs = defaultdict(list)
 edgelist = []
-for i in range(0,len(testusers)):
-	for j in range(i+1,len(testusers)):
+length = len(testusers)
+matrix = [[0 for x in range(length)] for x in range(length)] 
+for i in range(0,length):
+	userA = testusers[i]
+	dictA = user_subreddit_karma_dict[userA]
+	userArecommendedsubs = defaultdict(int)
+
+	for j in range(i+1,length):
 		temp_edge = {}
-		userA = testusers[i]
 		userB = testusers[j]
-		dictA = user_subreddit_karma_dict[userA]
 		dictB = user_subreddit_karma_dict[userB]
 		commonSubs = []
 		for key in dictA.keys():
+
 			if key in dictB.keys() and str(key) != chosen_subreddit:
 				commonSubs.append(str(key))
+
 		if len(commonSubs) > matching_threshold: # If list is not empty, create an edge
 			temp_edge["source"] = i
 			temp_edge["target"] = j
@@ -87,6 +95,22 @@ for i in range(0,len(testusers)):
 
 			connectedusers[userA].append(userB)
 			connectedusers[userB].append(userA)
+
+			matrix[i][j] = 1
+			matrix[j][i] = 1
+
+			
+	for j in range(0, length):
+		userB = testusers[j]
+		dictB = user_subreddit_karma_dict[userB]
+		if i != j and matrix[i][j] == 1:
+			for key in dictB.keys():
+				if key not in dictA.keys() and str(key) != chosen_subreddit:
+					# will end up being double the intended value, but everything is relative, so it's okay
+					userArecommendedsubs[str(key)] += 1 
+	
+
+	recommendedsubs[userA].append(userArecommendedsubs)
 
 print ("Finished user comparisons and creating edges.")
 
@@ -103,9 +127,23 @@ for i in range(0,len(testusers)):
 
 print ("Finished creating nodes.")
 
+
+json_recommendedsubs = defaultdict(list)
+
+for key in recommendedsubs.keys():
+	highestsubs = []
+	count = num_recommendedsubs
+	for sub in sorted(recommendedsubs, key=recommendedsubs.get):
+		if count <= 0:
+			break
+		highestsubs.append(sub)
+		count -= 1
+	json_recommendedsubs[str(key)] = highestsubs
+
 json_dict = {}
 json_dict["nodes"] = nodelist
 json_dict["links"] = edgelist
+json_dict["recommendedsubs"] = recommendedsubs
 json_dict["maxconnections"] = maxconnections
 
 with open('testdata2.json', 'w') as outfile:
