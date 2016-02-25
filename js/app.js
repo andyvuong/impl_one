@@ -1,5 +1,17 @@
 $(document).ready(function() {
     $('#myModal').modal('show');
+    window.availableWords = []
+
+    function callback(data) {
+        window.availableWords = data.split('\n');
+        //console.log(window.availableWords);
+        $( "#search-reddit" ).autocomplete({
+            maxResults: 5,
+            source: availableWords
+        });
+    }
+
+    $.get("../subs.txt", callback);
 
     // on modal close, focus on reddit search box
     $('#myModal').on('hidden.bs.modal', function () {
@@ -22,23 +34,14 @@ $(document).ready(function() {
         
     });
 
-    var height = 350;
-    var width = 350;
+
+
+    var height = $("#content-area").width();
+    var width = $("#content-area").height();
     var force = d3.layout.force();
-    var svg = d3.select("#content-area").append("svg:svg")
-    .attr("width", width)
-    .attr("height", height)
-    .call(d3.behavior.zoom().on("zoom", redraw));
-
-    var vis = svg
-        .append('g');
-
-    function redraw() {
-        
-        vis.attr("transform",
-                 "translate(" + d3.event.translate + ")"
-                 + " scale(" + d3.event.scale + ")");
-    }
+    var svg = d3.select("#content-area").append("svg")
+    .attr("width", height)
+    .attr("height", width);
 
     d3.json("../test.json", function(error, json) {
         svg.selectAll("*").remove();
@@ -48,13 +51,17 @@ $(document).ready(function() {
         var links = data.links;
         var nodes = data.nodes;
 
+        // general force layout attributes
         var force = d3.layout.force()
             .size([width, height])
             .charge(-100)
             .nodes(nodes)
             .links(links)
+            .linkDistance(100)
             .start();
 
+
+        // svg component attributes
         var link = svg.selectAll(".link")
             .data(links)
             .enter().append("line")
@@ -71,11 +78,6 @@ $(document).ready(function() {
             .attr("r", r)
             .call(force.drag);
 
-          vis.style("opacity", 1e-6)
-            .transition()
-            .duration(1000)
-            .style("opacity", 1);
-
         force.on("tick", function() {
 
             link.attr("x1", function(d) { return d.source.x; })
@@ -83,8 +85,8 @@ $(document).ready(function() {
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
 
-            node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
-                .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+            node.attr("cx", function(d) { d.x = Math.max(r, Math.min(width - r, d.x)); return d.x; })
+                .attr("cy", function(d) { d.y = Math.max(r, Math.min(height - r, d.y)); return d.y });
           });
     });
 

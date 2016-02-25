@@ -13,7 +13,8 @@
             <div id="top-bar" class="row">
                 <span class="subreddit-chooser">
                     <p>r/</p>
-                    <input id="search-reddit" type="search" autofocus="autofocus" placeholder="search for a subreddit"/>
+                        <input id="search-reddit" type="search" autofocus="autofocus" placeholder="search for a subreddit"/>
+
                 </span>
             </div>
             <div id="content-area" class="row">
@@ -30,6 +31,19 @@
                         <input type="text" class="search" placeholder="Search">
                     </div>
                 </div>
+                <div class="key">
+
+                    <h3>Top Redditmendations</h3>
+                    <hr>
+                    <div id="key-rec">
+                        <p></p>
+                    </div>
+                    <h3>Similar Users</h3>
+                    <hr>
+                    <div id="key-use">
+                        <p></p>
+                    </div> 
+                </div>  
             </div>
         </div>
         <div class="modal fade" id="myModal" tabindex="-10" role="dialog" aria-labelledby="myModalLabel">
@@ -46,6 +60,7 @@
 
         <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <script src="./js/d3.js"></script>
         <script src="./js/app.js"></script>
     </body>

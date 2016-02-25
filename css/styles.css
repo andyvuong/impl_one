@@ -130,3 +130,71 @@ input[type="search"]:-ms-input-placeholder {
 a {
     color: #abbb9f;
 }
+
+.ui2 {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    top: 3%;
+    margin: 0 1% 0 1%;
+}
+
+.ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+.ui-helper-hidden-accessible { display:none; }
+
+.ui-menu .ui-menu-item a{
+    color: #706482;
+}
+
+ul.ui-autocomplete {
+    list-style: none;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 2em;
+    
+}
+
+.key {
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    height: 60%;
+    width: 23%;
+    background-color: #f0f0a8;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.key h3 {
+  color: #706482;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.key hr {
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #706482;
+  width: 80%;
+  border-top: 1px solid #706482;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#key-rec {
+  height: 35%;
+}
+
+#key-use {
+  height: 40%;
+}
+
+.key div {
+  margin-left: 10px;
+  margin-right: 10px; 
+}
